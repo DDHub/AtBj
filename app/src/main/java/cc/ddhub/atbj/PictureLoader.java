@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cc.ddhub.atbj.bean.Picture;
@@ -41,9 +42,14 @@ public class PictureLoader extends AsyncTask<Void, Integer, PictureMap>{
         if (folder.isDirectory()){
             File[] files = folder.listFiles();
             if (files != null){
+                int i = 0;
                 for (File file : files){
                     Picture picture = new Picture(file.getAbsolutePath(), file.lastModified());
+                    if (i > 5){
+                        picture.setTime(file.lastModified() - 86400 * 1000);
+                    }
                     pictureMap.addPicture(picture);
+                    i++;
                 }
             }
         }

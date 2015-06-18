@@ -3,6 +3,7 @@ package cc.ddhub.atbj.adapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -16,6 +17,11 @@ import cc.ddhub.atbj.view.PictureItemView;
  */
 public class PictureAdapter extends BaseAdapter {
     private PictureMap pictureMap;
+    private PictureItemView.OnPictureItemClickListener pictureItemClickListener;
+
+    public void setOnPictureItemClickListener(PictureItemView.OnPictureItemClickListener pictureItemClickListener) {
+        this.pictureItemClickListener = pictureItemClickListener;
+    }
 
     public void setPictureMap(PictureMap pictureMap){
         this.pictureMap = pictureMap;
@@ -60,6 +66,7 @@ public class PictureAdapter extends BaseAdapter {
         holder.itemView.clear();
         holder.itemView.setDate(pictures.getTime());
         holder.itemView.addPictures(pictures.getPictures());
+        holder.itemView.setOnPictureItemClickListener(pictureItemClickListener);
         return holder.itemView;
     }
 

@@ -54,10 +54,10 @@ public class Pictures implements Comparable<Pictures>{
     @Override
     public int compareTo(@NonNull Pictures another) {
         if (getTime() > another.getTime()){
-            return 1;
+            return -1;
         }
         if (getTime() < another.getTime()){
-            return -1;
+            return 1;
         }
         return 0;
     }
