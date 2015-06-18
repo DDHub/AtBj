@@ -31,15 +31,6 @@ public class Pictures implements Comparable<Pictures>{
         return time;
     }
 
-    public String getDate(){
-        if (DateUtils.isToday(time)){
-            return "今天";
-        }
-        String pattern = "MM-dd";
-        SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.getDefault());
-        return format.format(new Date(time));
-    }
-
     public void addPicture(Picture picture){
         pictures.add(picture);
     }

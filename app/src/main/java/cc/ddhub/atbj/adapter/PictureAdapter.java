@@ -19,6 +19,7 @@ public class PictureAdapter extends BaseAdapter {
 
     public void setPictureMap(PictureMap pictureMap){
         this.pictureMap = pictureMap;
+        notifyDataSetChanged();
     }
 
     public void addPicture(Picture picture){
@@ -55,6 +56,10 @@ public class PictureAdapter extends BaseAdapter {
         }else {
             holder = (Holder) view.getTag();
         }
+        Pictures pictures = pictureMap.get(i);
+        holder.itemView.clear();
+        holder.itemView.setDate(pictures.getTime());
+        holder.itemView.addPictures(pictures.getPictures());
         return holder.itemView;
     }
 

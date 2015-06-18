@@ -1,6 +1,7 @@
 package cc.ddhub.atbj.view;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -10,8 +11,14 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 import cc.ddhub.atbj.R;
 import cc.ddhub.atbj.Util.ViewUtil;
+import cc.ddhub.atbj.bean.Picture;
 
 /**
  * Created by denzelw on 15/6/13.
@@ -60,11 +67,30 @@ public class PictureItemView extends LinearLayout {
         height = width;
     }
 
-    public void setDate(String date){
-        dateText.setText(date);
+    public void clear(){
+        removeAllViews();
     }
 
-    public void addPicture(String file){
+    public void setDate(long dateInMillis){
+        dateText.setText(getDate(dateInMillis));
+    }
+
+    public String getDate(long time){
+        if (DateUtils.isToday(time)){
+            return "½ñÌì";
+        }
+        String pattern = "MM-dd";
+        SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.getDefault());
+        return format.format(new Date(time));
+    }
+
+    public void addPictures(List<Picture> pictures){
+        for (Picture picture : pictures){
+            addPicture(picture.getPath());
+        }
+    }
+
+    private void addPicture(String file){
         GridLayout.LayoutParams params = new GridLayout.LayoutParams();
         params.width = width;
         params.height = height;
