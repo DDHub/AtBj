@@ -42,7 +42,7 @@ public class PictureLoader extends AsyncTask<Void, Integer, PictureMap>{
             File[] files = folder.listFiles();
             if (files != null){
                 for (File file : files){
-                    Picture picture = new Picture(file.getAbsolutePath(), 0);
+                    Picture picture = new Picture(file.getAbsolutePath(), file.lastModified());
                     pictureMap.addPicture(picture);
                 }
             }
