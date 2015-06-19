@@ -1,8 +1,11 @@
 package cc.ddhub.atbj.Util;
 
-import android.text.format.Time;
+import android.text.TextUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by denzelw on 15/6/14.
@@ -21,4 +24,18 @@ public class DateUtil {
 
         return y == c2.get(Calendar.YEAR) && d == c2.get(Calendar.DAY_OF_YEAR);
     }
+
+    public static long getTime(String time, String pattern){
+        if (TextUtils.isEmpty(time)){
+            return 0;
+        }
+        SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.getDefault());
+        try {
+            return format.parse(time).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
 }

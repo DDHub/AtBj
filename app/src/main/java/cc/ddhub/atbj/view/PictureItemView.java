@@ -1,8 +1,8 @@
 package cc.ddhub.atbj.view;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Point;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -21,10 +21,9 @@ import java.util.List;
 import java.util.Locale;
 
 import cc.ddhub.atbj.R;
-import cc.ddhub.atbj.util.DateUtil;
-import cc.ddhub.atbj.util.SystemUtil;
-import cc.ddhub.atbj.util.ViewUtil;
 import cc.ddhub.atbj.bean.Picture;
+import cc.ddhub.atbj.Util.SystemUtil;
+import cc.ddhub.atbj.Util.ViewUtil;
 
 /**
  * Created by denzelw on 15/6/13.
@@ -32,6 +31,7 @@ import cc.ddhub.atbj.bean.Picture;
 public class PictureItemView extends LinearLayout {
     private TextView dateText;
     private GridLayout pictureGrid;
+    private DisplayImageOptions options;
 
     private List<Picture> pictureList;
 
@@ -84,6 +84,8 @@ public class PictureItemView extends LinearLayout {
         Point point = SystemUtil.getScreenSize(context);
         width = (point.x - leftMargin * (COLUMN_COUNT - 1) - ((LayoutParams) pictureGrid.getLayoutParams()).leftMargin - ((LayoutParams) pictureGrid.getLayoutParams()).rightMargin) / COLUMN_COUNT;
         height = width;
+
+        options = new DisplayImageOptions.Builder().cacheOnDisk(false).cacheInMemory(false).build();
     }
 
     @Override
@@ -115,25 +117,35 @@ public class PictureItemView extends LinearLayout {
             return;
         }
         for (Picture picture : pictures) {
-            addPicture(picture.getPath());
-            pictureList.add(picture);
+            boolean isSuc = addPicture(picture.getPath());
+            if (isSuc) {
+                pictureList.add(picture);
+            }
         }
         if (!pictures.isEmpty() && DateUtils.isToday(pictures.get(0).getTime())){
-            ImageView imageView = new ImageView(getContext());
-            imageView.setOnClickListener(clickListener);
-            imageView.setImageResource(R.mipmap.ic_launcher);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            pictureGrid.addView(imageView, initViewParams());
+            newPicture();
         }
     }
 
-    private void addPicture(String file) {
+    public void newPicture(){
+        ImageView imageView = new ImageView(getContext());
+        imageView.setOnClickListener(clickListener);
+        imageView.setImageResource(R.drawable.ic_add_white_48dp);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        pictureGrid.addView(imageView, initViewParams());
+    }
+
+    private boolean addPicture(String file) {
+        if (TextUtils.isEmpty(file)){
+            return false;
+        }
         ImageView imageView = new ImageView(getContext());
         imageView.setTag(pictureGrid.getChildCount());
         imageView.setOnClickListener(clickListener);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        ImageLoader.getInstance().displayImage("file://" + file, imageView);
+        ImageLoader.getInstance().displayImage("file://" + file, imageView, options);
         pictureGrid.addView(imageView, initViewParams());
+        return true;
     }
 
     private GridLayout.LayoutParams initViewParams(){

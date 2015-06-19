@@ -3,9 +3,6 @@ package cc.ddhub.atbj.adapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
-
-import java.util.List;
 
 import cc.ddhub.atbj.bean.Picture;
 import cc.ddhub.atbj.bean.PictureMap;

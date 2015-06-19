@@ -11,11 +11,5 @@
         android:divider="#fff4f4f4"
         android:dividerHeight="1dp"
         android:listSelector="@android:color/transparent"/>
-    <ImageView android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:scaleType="centerInside"
-        android:visibility="gone"/>
 
 </FrameLayout>

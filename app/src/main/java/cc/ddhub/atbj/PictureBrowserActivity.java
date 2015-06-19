@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import cc.ddhub.atbj.bean.Picture;
-import cc.ddhub.atbj.util.ViewUtil;
+import cc.ddhub.atbj.Util.ViewUtil;
 
 /**
  * Created by DELL on 2015/6/18.
@@ -44,5 +44,11 @@ public class PictureBrowserActivity extends Activity {
             ImageView imageView = ViewUtil.findViewById(getWindow().getDecorView(), R.id.imageView);
             ImageLoader.getInstance().displayImage("file://" + picture.getPath(), imageView);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.gc();
     }
 }

@@ -6,6 +6,8 @@ import android.os.Environment;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
+import java.io.File;
+
 /**
  * Created by denzelw on 15/6/14.
  */
@@ -22,11 +24,13 @@ public class PictureApplication extends Application {
         application = this;
 
         ImageLoader.getInstance().init(new ImageLoaderConfiguration.Builder(this).build());
+
+        File file = new File(getPictureCachePath());
+        file.mkdirs();
     }
 
     public String getPictureCachePath(){
-//        return getCacheDir().getAbsolutePath() + "/pictures/";
-        return Environment.getExternalStorageDirectory().getAbsolutePath() + "/test";
+        return Environment.getExternalStorageDirectory().getAbsolutePath() + "/AtBj";
     }
 
 }

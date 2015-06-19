@@ -1,14 +1,16 @@
 package cc.ddhub.atbj;
 
+import android.media.ExifInterface;
 import android.os.AsyncTask;
+import android.text.format.DateUtils;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.io.IOException;
 
 import cc.ddhub.atbj.bean.Picture;
 import cc.ddhub.atbj.bean.PictureMap;
+import cc.ddhub.atbj.bean.Pictures;
+import cc.ddhub.atbj.Util.DateUtil;
 
 /**
  * Created by denzelw on 15/6/14.
@@ -42,18 +44,28 @@ public class PictureLoader extends AsyncTask<Void, Integer, PictureMap>{
         if (folder.isDirectory()){
             File[] files = folder.listFiles();
             if (files != null){
-                int i = 0;
                 for (File file : files){
-                    Picture picture = new Picture(file.getAbsolutePath(), file.lastModified());
-                    if (i > 5){
-                        picture.setTime(file.lastModified() - 86400 * 1000);
+                    long time = file.lastModified();
+                    try {
+                        ExifInterface exifInterface = new ExifInterface(file.getAbsolutePath());
+                        String s = exifInterface.getAttribute(ExifInterface.TAG_DATETIME);
+                        time = DateUtil.getTime(s, "yyyy:MM:dd hh:mm:ss");
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
+                    Picture picture = new Picture(file.getAbsolutePath(), time);
                     pictureMap.addPicture(picture);
-                    i++;
                 }
             }
         }
         pictureMap.sort();
+        if (pictureMap.size() == 0 || !DateUtils.isToday(pictureMap.get(0).getTime())){
+            Picture picture = new Picture("", System.currentTimeMillis());
+            Pictures pictures = new Pictures();
+            pictures.setTime(picture.getTime());
+            pictures.addPicture(picture);
+            pictureMap.addPictures(0, pictures);
+        }
         return pictureMap;
     }
 

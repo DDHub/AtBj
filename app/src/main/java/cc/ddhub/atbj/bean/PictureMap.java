@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import cc.ddhub.atbj.util.DateUtil;
+import cc.ddhub.atbj.Util.DateUtil;
 
 /**
  * Created by denzelw on 15/6/13.
@@ -31,6 +31,10 @@ public class PictureMap {
         ps.addPicture(picture);
         picturesList.add(ps);
         return true;
+    }
+
+    public void addPictures(int index, Pictures pictures){
+        picturesList.add(index, pictures);
     }
 
     public Pictures get(int index){
