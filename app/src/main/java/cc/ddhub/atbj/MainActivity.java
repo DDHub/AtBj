@@ -10,10 +10,12 @@ import android.widget.ListView;
 
 import java.io.File;
 
+import cc.ddhub.atbj.Util.ViewUtil;
 import cc.ddhub.atbj.adapter.PictureAdapter;
 import cc.ddhub.atbj.bean.Picture;
 import cc.ddhub.atbj.bean.PictureMap;
-import cc.ddhub.atbj.Util.ViewUtil;
+import cc.ddhub.atbj.data.OnPictureLoadListener;
+import cc.ddhub.atbj.data.PictureCenter;
 import cc.ddhub.atbj.view.PictureItemView;
 
 public class MainActivity extends Activity {
@@ -40,11 +42,11 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         if (pictureAdapter.getCount() == 0) {
-            new PictureLoader(pictureLoadListener, PictureApplication.getInstance().getPictureCachePath()).execute();
+            PictureCenter.getInstance().load(pictureLoadListener);
         }
     }
 
-    private PictureLoader.OnPictureLoadListener pictureLoadListener = new PictureLoader.OnPictureLoadListener() {
+    private OnPictureLoadListener pictureLoadListener = new OnPictureLoadListener() {
         @Override
         public void onPicturePreload() {
 

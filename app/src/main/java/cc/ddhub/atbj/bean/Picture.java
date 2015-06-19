@@ -3,6 +3,7 @@ package cc.ddhub.atbj.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 /**
  * Created by denzelw on 15/6/13.
@@ -41,6 +42,14 @@ public class Picture implements Comparable<Picture>,Parcelable {
             return -1;
         }
         return 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Picture){
+            return !TextUtils.isEmpty(((Picture) o).getPath()) && ((Picture) o).getPath().equals(getPath()) && ((Picture) o).getTime() == getTime();
+        }
+        return super.equals(o);
     }
 
     @Override

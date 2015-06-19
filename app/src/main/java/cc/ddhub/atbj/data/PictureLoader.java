@@ -1,4 +1,4 @@
-package cc.ddhub.atbj;
+package cc.ddhub.atbj.data;
 
 import android.media.ExifInterface;
 import android.os.AsyncTask;
@@ -15,14 +15,9 @@ import cc.ddhub.atbj.Util.DateUtil;
 /**
  * Created by denzelw on 15/6/14.
  */
-public class PictureLoader extends AsyncTask<Void, Integer, PictureMap>{
+class PictureLoader extends AsyncTask<Void, Integer, PictureMap>{
     private OnPictureLoadListener listener;
     private String folder;
-
-    public interface OnPictureLoadListener{
-        public void onPicturePreload();
-        public void onPictureLoadSucceed(PictureMap pictureMap);
-    }
 
     public PictureLoader(OnPictureLoadListener listener, String folder){
         this.listener = listener;
