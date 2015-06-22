@@ -30,20 +30,20 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ListView listView = ViewUtil.findViewById(getWindow().getDecorView(), R.id.listView);
-
-        pictureAdapter = new PictureAdapter();
-        pictureAdapter.setOnPictureItemClickListener(pictureItemClickListener);
-        listView.setAdapter(pictureAdapter);
-
+//        ListView listView = ViewUtil.findViewById(getWindow().getDecorView(), R.id.listView);
+//
+//        pictureAdapter = new PictureAdapter();
+//        pictureAdapter.setOnPictureItemClickListener(pictureItemClickListener);
+//        listView.setAdapter(pictureAdapter);
+        startActivity(LauncherActivity.getIntent(this));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (pictureAdapter.getCount() == 0) {
-            PictureCenter.getInstance().load(pictureLoadListener);
-        }
+//        if (pictureAdapter.getCount() == 0) {
+//            PictureCenter.getInstance().load(pictureLoadListener);
+//        }
     }
 
     private OnPictureLoadListener pictureLoadListener = new OnPictureLoadListener() {
