@@ -44,9 +44,9 @@ public class PictureCenter {
         for (int i = 0; i < size; i++){
             Pictures pictures = pictureMap.get(i);
             List<Picture> list = pictures.getPictures();
-            int count = pictures.size();
+            int count = list.size();
             for (int j = 0; j < count; j++){
-                if (list.get(i).equals(picture)){
+                if (list.get(j).equals(picture)){
                     if (j == (count - 1)){
                         if (i == (size - 1)){
                             return null;
