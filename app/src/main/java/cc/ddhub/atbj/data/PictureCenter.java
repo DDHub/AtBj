@@ -41,6 +41,7 @@ public class PictureCenter {
             return null;
         }
         int size = pictureMap.size();
+        // amazing for-for-if-if-if-if :D
         for (int i = 0; i < size; i++){
             Pictures pictures = pictureMap.get(i);
             List<Picture> list = pictures.getPictures();

@@ -7,4 +7,6 @@
     <string name="today">今天</string>
     <string name="launcher_text1">一个人的生活</string>
     <string name="launcher_text2">也会过得精彩</string>
+
+    <string name="save">保存</string>
 </resources>

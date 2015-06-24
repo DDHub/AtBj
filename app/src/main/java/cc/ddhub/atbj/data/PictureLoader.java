@@ -2,6 +2,7 @@ package cc.ddhub.atbj.data;
 
 import android.media.ExifInterface;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 
 import java.io.File;
@@ -44,7 +45,9 @@ class PictureLoader extends AsyncTask<Void, Integer, PictureMap>{
                     try {
                         ExifInterface exifInterface = new ExifInterface(file.getAbsolutePath());
                         String s = exifInterface.getAttribute(ExifInterface.TAG_DATETIME);
-                        time = DateUtil.getTime(s, "yyyy:MM:dd hh:mm:ss");
+                        if (!TextUtils.isEmpty(s)) {
+                            time = DateUtil.getTime(s, "yyyy:MM:dd hh:mm:ss");
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

@@ -1,15 +1,13 @@
 package cc.ddhub.atbj;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ListView;
 
-import java.io.File;
-
+import cc.ddhub.atbj.Util.PictureUtil;
 import cc.ddhub.atbj.Util.ViewUtil;
 import cc.ddhub.atbj.adapter.PictureAdapter;
 import cc.ddhub.atbj.bean.Picture;
@@ -25,6 +23,10 @@ public class MainActivity extends Activity {
 
     private static final int REQUEST_CAMERA = 0;
 
+    public static Intent newIntent(Context context){
+        return new Intent(context, MainActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +37,6 @@ public class MainActivity extends Activity {
         pictureAdapter = new PictureAdapter();
         pictureAdapter.setOnPictureItemClickListener(pictureItemClickListener);
         listView.setAdapter(pictureAdapter);
-//        startActivity(LauncherActivity.getIntent(this));
     }
 
     @Override
@@ -44,6 +45,12 @@ public class MainActivity extends Activity {
         if (pictureAdapter.getCount() == 0) {
             PictureCenter.getInstance().load(pictureLoadListener);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.gc();
     }
 
     private OnPictureLoadListener pictureLoadListener = new OnPictureLoadListener() {
@@ -66,21 +73,23 @@ public class MainActivity extends Activity {
 
         @Override
         public void onPictureAddClick() {
-            tempPicturePath = PictureApplication.getInstance().getPictureCachePath() + "/" + System.currentTimeMillis() + ".jpg";
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(
-                    new File(tempPicturePath)));
-            startActivityForResult(intent, REQUEST_CAMERA);
+            tempPicturePath = PictureUtil.getTempPicturePath();
+            startActivityForResult(PictureUtil.addNewPicture(tempPicturePath), REQUEST_CAMERA);
+        }
+
+        @Override
+        public void onPictureAddLongClick() {
+            startActivity(NewTextActivity.getIntent(MainActivity.this, PictureUtil.getTempPicturePath()));
         }
     };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK){
+        if (resultCode != RESULT_OK) {
             return;
         }
-        if (REQUEST_CAMERA == requestCode){
+        if (REQUEST_CAMERA == requestCode) {
             Picture picture = new Picture(tempPicturePath, System.currentTimeMillis());
             pictureAdapter.addPicture(picture);
         }

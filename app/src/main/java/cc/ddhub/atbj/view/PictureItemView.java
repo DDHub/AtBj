@@ -47,6 +47,7 @@ public class PictureItemView extends LinearLayout {
     public interface OnPictureItemClickListener {
         public void onPictureItemClick(View view, int position, Picture picture);
         public void onPictureAddClick();
+        public void onPictureAddLongClick();
     }
 
     public void setOnPictureItemClickListener(OnPictureItemClickListener itemClickListener) {
@@ -130,6 +131,7 @@ public class PictureItemView extends LinearLayout {
     public void newPicture(){
         ImageView imageView = new ImageView(getContext());
         imageView.setOnClickListener(clickListener);
+        imageView.setOnLongClickListener(longClickListener);
         imageView.setImageResource(R.drawable.ic_add_white_48dp);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         pictureGrid.addView(imageView, initViewParams());
@@ -179,6 +181,16 @@ public class PictureItemView extends LinearLayout {
                     pictureItemClickListener.onPictureItemClick(PictureItemView.this, position, pictureList.get(position));
                 }
             }
+        }
+    };
+
+    private OnLongClickListener longClickListener = new OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            if (pictureItemClickListener != null){
+                pictureItemClickListener.onPictureAddLongClick();
+            }
+            return true;
         }
     };
 
