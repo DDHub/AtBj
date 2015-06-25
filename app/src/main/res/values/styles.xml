@@ -12,4 +12,8 @@
         <item name="android:textColor">#fff4f4f4</item>
     </style>
 
+    <declare-styleable name="CoverText">
+        <attr name="coverColor" format="color" />
+    </declare-styleable>
+
 </resources>
